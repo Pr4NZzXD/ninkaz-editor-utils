@@ -202,7 +202,7 @@ class $modify(HUICreateParticlePopup, CreateParticlePopup) {
     };
 
     $override
-    bool init(ParticleGameObject* obj, CCArray* objs, gd::string str) {
+    bool init(ParticleGameObject* obj, CCArray* objs, std::string str) {
         if (!CreateParticlePopup::init(obj, objs, str)) return false;
 
         m_fields->popup = this;
@@ -230,7 +230,7 @@ class $modify(HUICreateParticlePopup, CreateParticlePopup) {
 
     void updateParticles() {
         if (m_targetObject) {
-            gd::string str = GameToolbox::saveParticleToString(m_particle);
+            std::string str = GameToolbox::saveParticleToString(m_particle);
             m_targetObject->setParticleString(str);
             m_targetObject->updateParticle();
 
@@ -238,7 +238,7 @@ class $modify(HUICreateParticlePopup, CreateParticlePopup) {
         }
 
         for (auto targetObject : CCArrayExt<ParticleGameObject>(m_targetObjects)) {
-            gd::string str = GameToolbox::saveParticleToString(m_particle);
+            std::string str = GameToolbox::saveParticleToString(m_particle);
             targetObject->setParticleString(str);
             targetObject->updateParticle();
         }
