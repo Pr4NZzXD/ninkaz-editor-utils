@@ -1,4 +1,5 @@
 #include "MixedInputPopup.hpp"
+#include "../../misc/InputNodeUtils.hpp"
 #include "MixedInputSettingsPopup.hpp"
 #include "MultiEditContext.hpp"
 #include "../../misc/StringUtils.hpp"
@@ -144,7 +145,7 @@ CCMenu* MixedInputPopup::createTopRow() {
 
     auto input = TextInput::create(70.f, "Num", "bigFont.fnt");
     input->setFilter("0123456789.-");
-    input->getInputNode()->m_numberInput = true;
+    if (auto inputNode = findInputNode(input)) inputNode->m_numberInput = true;
     input->setString(nk::toString(m_modifierValue));
     input->setID("modifier-value-input"_spr);
     input->setCallback([&](const std::string& text) {
@@ -243,7 +244,7 @@ CCMenu* MixedInputPopup::createBottomRow() {
     // INITIAL VALUE INPUT
 
     auto input = TextInput::create(70.f, "Num", "bigFont.fnt");
-    input->getInputNode()->m_numberInput = true;
+    if (auto inputNode = findInputNode(input)) inputNode->m_numberInput = true;
     input->setFilter("0123456789.-");
     input->setString(nk::toString(m_initialValue));
     input->setID("initial-value-input"_spr);
@@ -272,7 +273,7 @@ CCMenu* MixedInputPopup::createBottomRow() {
     incArrowBtn->setTag(2);
     incArrowBtn->setID("initial-value-inc-arrow"_spr);
 
-    input->getInputNode()->setTouchEnabled(m_direction != DirectionType::None);
+    if (auto inputNode = findInputNode(input)) inputNode->setTouchEnabled(m_direction != DirectionType::None);
     decArrowBtn->setEnabled(m_direction != DirectionType::None);
     incArrowBtn->setEnabled(m_direction != DirectionType::None);
 
@@ -506,7 +507,7 @@ void MixedInputPopup::onDirection(CCObject* sender) {
 
     // set if the initial value input is enabled
 
-    m_initialInput->getInputNode()->setTouchEnabled(m_direction != DirectionType::None);
+    if (auto inputNode = findInputNode(m_initialInput)) inputNode->setTouchEnabled(m_direction != DirectionType::None);
     m_initialInputCover->setVisible(m_direction == DirectionType::None);
     m_bottomRow->getChildByType<CCMenuItemSpriteExtra>(0)->setEnabled(m_direction != DirectionType::None);
     m_bottomRow->getChildByType<CCMenuItemSpriteExtra>(1)->setEnabled(m_direction != DirectionType::None);

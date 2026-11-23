@@ -376,8 +376,8 @@ class $modify(MESetupTriggerPopup, SetupTriggerPopup) {
     }
 
     $override
-    bool init(EffectGameObject* obj, CCArray* objs, float f1, float f2, int i1) {
-        if (!SetupTriggerPopup::init(obj, objs, f1, f2, i1)) return false;
+    bool init(EffectGameObject* obj, CCArray* objs, float f1, float f2, int i1, float verticalOffset) {
+        if (!SetupTriggerPopup::init(obj, objs, f1, f2, i1, verticalOffset)) return false;
         if (!MultiEditContext::isTriggerPopup(this)) return true;
 
         m_fields->init(this);
