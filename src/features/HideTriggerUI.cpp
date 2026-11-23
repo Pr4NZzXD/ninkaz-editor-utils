@@ -117,8 +117,8 @@ class $modify(HUISetupTriggerPopup, SetupTriggerPopup) {
     };
 
     $override
-    bool init(EffectGameObject* trigger, CCArray* triggers, float width, float height, int unkEnum) {
-        if (!SetupTriggerPopup::init(trigger, triggers, width, height, unkEnum)) return false;
+    bool init(EffectGameObject* trigger, CCArray* triggers, float width, float height, int unkEnum, float verticalOffset) {
+        if (!SetupTriggerPopup::init(trigger, triggers, width, height, unkEnum, verticalOffset)) return false;
         if (!MultiEditContext::isTriggerPopup(this)) return true;
 
         m_fields->setupMixedListener = SetupMixedEvent().listen([this](MultiEditContext* ctx) {
