@@ -703,182 +703,25 @@ class $modify(STPSetupSpawnPopup, SetupSpawnPopup) {
 
 #include <Geode/modify/GJFollowCommandLayer.hpp>
 
-class $modify(GJFollowCommandLayer) {
-    bool init(EffectGameObject* obj, CCArray* objs) {
-        if (!GJFollowCommandLayer::init(obj, objs)) return false;
+// GJFollowCommandLayer: GD 2.2091 moved this popup to the standard trigger UI system, so the
+// generic SetupTriggerPopup::createValueControlAdvanced hook above already handles it.
+// (the old per-popup hook used members that no longer exist)
 
-        auto ctx = getMultiEditContext(this);
-
-        ctx->callback = [this, ctx](int property, float value) {
-            if (property == 10) {
-                MultiEditContext::setSliderValue(m_moveTimeSlider, value, 0, 10);
-            } else if (property == 72) {
-                MultiEditContext::setSliderValue(m_xModSlider, value, -1, 1);
-            } else if (property == 73) {
-                MultiEditContext::setSliderValue(m_yModSlider, value, -1, 1);
-            }
-        };
-
-        ctx->addInput(m_moveTimeInput, 10);
-        ctx->addInput(m_xModInput, 72);
-        ctx->addInput(m_yModInput, 73);
-        ctx->addInput(m_targetIDInput, 51);
-        ctx->addInput(m_followIDInput, 71);
-
-        ctx->addInputBG(m_mainLayer->getChildByType<CCScale9Sprite*>(1), 10);
-        ctx->addInputBG(m_mainLayer->getChildByType<CCScale9Sprite*>(2), 72);
-        ctx->addInputBG(m_mainLayer->getChildByType<CCScale9Sprite*>(3), 73);
-        ctx->addInputBG(m_mainLayer->getChildByType<CCScale9Sprite*>(4), 51);
-        ctx->addInputBG(m_mainLayer->getChildByType<CCScale9Sprite*>(5), 71);
-
-        m_moveTimeInput->setMaxLabelWidth(50);
-        m_xModInput->setMaxLabelWidth(50);
-        m_yModInput->setMaxLabelWidth(50);
-        m_targetIDInput->setMaxLabelWidth(40);
-        m_followIDInput->setMaxLabelWidth(40);
-
-        ctx->addSlider(m_moveTimeSlider, 10);
-        ctx->addSlider(m_xModSlider, 72);
-        ctx->addSlider(m_yModSlider, 73);
-
-        m_moveTimeSlider->m_delegate = this;
-        m_xModSlider->m_delegate = this;
-        m_yModSlider->m_delegate = this;
-
-        ctx->addInputLabel(m_mainLayer->getChildByType<CCLabelBMFont*>(1), 10);
-        ctx->addInputLabel(m_mainLayer->getChildByType<CCLabelBMFont*>(2), 72);
-        ctx->addInputLabel(m_mainLayer->getChildByType<CCLabelBMFont*>(3), 73);
-        ctx->addInputLabel(m_mainLayer->getChildByType<CCLabelBMFont*>(7), 51);
-        ctx->addInputLabel(m_mainLayer->getChildByType<CCLabelBMFont*>(8), 71);
-
-        ctx->addButton(m_buttonMenu->getChildByType<CCMenuItemSpriteExtra*>(2), 51);
-        ctx->addButton(m_buttonMenu->getChildByType<CCMenuItemSpriteExtra*>(3), 51);
-        ctx->addButton(m_buttonMenu->getChildByType<CCMenuItemSpriteExtra*>(4), 71);
-        ctx->addButton(m_buttonMenu->getChildByType<CCMenuItemSpriteExtra*>(5), 71);
-
-        ctx->setupMixed();
-
-        return true;
-    }
-};
 
 #include <Geode/modify/SetupCollisionTriggerPopup.hpp>
 
-class $modify(SetupCollisionTriggerPopup) {
-    bool init(EffectGameObject* obj, CCArray* objs) {
-        if (!SetupCollisionTriggerPopup::init(obj, objs)) return false;
+// SetupCollisionTriggerPopup: GD 2.2091 moved this popup to the standard trigger UI system, so the
+// generic SetupTriggerPopup::createValueControlAdvanced hook above already handles it.
+// (the old per-popup hook used members that no longer exist)
 
-        auto ctx = getMultiEditContext(this);
-
-        ctx->addInput(m_blockAInput, 80);
-        ctx->addInput(m_blockBInput, 95);
-        ctx->addInput(m_targetIDInput, 51);
-
-        ctx->addInputBG(m_mainLayer->getChildByType<CCScale9Sprite*>(1), 80);
-        ctx->addInputBG(m_mainLayer->getChildByType<CCScale9Sprite*>(2), 95);
-        ctx->addInputBG(m_mainLayer->getChildByType<CCScale9Sprite*>(3), 51);
-
-        m_blockAInput->setMaxLabelWidth(40);
-        m_blockBInput->setMaxLabelWidth(40);
-        m_targetIDInput->setMaxLabelWidth(40);
-
-        ctx->addInputLabel(m_mainLayer->getChildByType<CCLabelBMFont*>(1), 80);
-        ctx->addInputLabel(m_mainLayer->getChildByType<CCLabelBMFont*>(2), 95);
-        ctx->addInputLabel(m_mainLayer->getChildByType<CCLabelBMFont*>(3), 51);
-
-        ctx->addButton(m_buttonMenu->getChildByType<CCMenuItemSpriteExtra*>(2), 80);
-        ctx->addButton(m_buttonMenu->getChildByType<CCMenuItemSpriteExtra*>(3), 80);
-        ctx->addButton(m_buttonMenu->getChildByType<CCMenuItemSpriteExtra*>(4), 95);
-        ctx->addButton(m_buttonMenu->getChildByType<CCMenuItemSpriteExtra*>(5), 95);
-        ctx->addButton(m_buttonMenu->getChildByType<CCMenuItemSpriteExtra*>(6), 51);
-        ctx->addButton(m_buttonMenu->getChildByType<CCMenuItemSpriteExtra*>(7), 51);
-
-        ctx->setupMixed();
-
-        return true;
-    }
-};
 
 #include <Geode/modify/CollisionBlockPopup.hpp>
 // note: CollisionBlockPopup isn't a subclass of SetupTriggerPopup
 
-class $modify(MECollisionBlockPopup, CollisionBlockPopup) {
-    struct Fields : MultiEditContext {
-        CollisionBlockPopup* popup = nullptr;
+// CollisionBlockPopup: GD 2.2091 moved this popup to the standard trigger UI system, so the
+// generic SetupTriggerPopup::createValueControlAdvanced hook above already handles it.
+// (the old per-popup hook used members that no longer exist)
 
-        void init(CollisionBlockPopup* popup) {
-            this->popup = popup;
-            registerSelf(popup);
-        }
-
-        float getProperty(GameObject* object, int property) override {
-            if (property == 80) {
-                auto collisionBlock = typeinfo_cast<EffectGameObject*>(object);
-                return collisionBlock ? collisionBlock->m_itemID : 0;
-            }
-
-            return 0;
-        }
-
-        void setProperty(GameObject* object, int property, float value) override {
-            if (property == 80) {
-                auto collisionBlock = typeinfo_cast<EffectGameObject*>(object);
-                if (collisionBlock) collisionBlock->m_itemID = value;
-            }
-        }
-
-        bool hasProperty(GameObject* object, int property) override {
-            return property == 80 && object->m_objectID == 1816;
-        }
-
-        int getPropertyDecimalPlaces(int property) override {
-            return 0;
-        }
-
-        PropertyBounds getPropertyBounds(int property) override {
-            return PropertyBounds(0, 999);
-        }
-
-        void onMixedInputApplied(int property, std::optional<float> value) override {
-            updateMixedUI(property, value);
-
-            for (auto obj : m_gameObjects) {
-                LevelEditorLayer::get()->updateObjectLabel(obj);
-            }
-
-            if (value) {
-                popup->m_blockIDInput->setString(nk::toString(*value, 0));
-            }
-        }
-
-        CCArray* getObjectArray() override {
-            if (auto obj = popup->m_gameObject) {
-                return CCArray::createWithObject(obj);
-            } else {
-                return popup->m_gameObjects;
-            }
-        }
-    };
-
-    $override
-    bool init(EffectGameObject* obj, CCArray* objs) {
-        if (!CollisionBlockPopup::init(obj, objs)) return false;
-
-        m_fields->init(this);
-
-        m_fields->addInput(m_blockIDInput, 80);
-        m_fields->addInputBG(m_mainLayer->getChildByType<CCScale9Sprite*>(1), 80);
-        m_blockIDInput->setMaxLabelWidth(40);
-
-        m_fields->addButton(m_buttonMenu->getChildByType<CCMenuItemSpriteExtra*>(2), 80);
-        m_fields->addButton(m_buttonMenu->getChildByType<CCMenuItemSpriteExtra*>(3), 80);
-        m_fields->addButton(m_buttonMenu->getChildByType<CCMenuItemSpriteExtra*>(4), 80);
-
-        m_fields->setupMixed();
-
-        return true;
-    }
-};
 
 #include <Geode/modify/SetupTouchTogglePopup.hpp>
 
@@ -915,57 +758,16 @@ class $modify(MESetupTouchTogglePopup, SetupTouchTogglePopup) {
 
         return true;
     }
+    // note: SetupTouchTogglePopup::onTargetIDArrow no longer exists in GD 2.2091, so that override was removed
 
-    $override
-    void onTargetIDArrow(CCObject* sender) {
-        SetupTouchTogglePopup::onTargetIDArrow(sender);
-
-        auto ctx = getMultiEditContext(this);
-
-        for (auto obj : ctx->getGameObjects()) {
-            if (auto trigger = typeinfo_cast<EffectGameObject*>(obj)) {
-                trigger->m_targetGroupID = m_groupID;
-                LevelEditorLayer::updateObjectLabel(trigger);
-            }
-        }
-    }
 };
 
 #include <Geode/modify/SetupCountTriggerPopup.hpp>
 
-class $modify(SetupCountTriggerPopup) {
-    bool init(EffectGameObject* obj, CCArray* objs) {
-        if (!SetupCountTriggerPopup::init(obj, objs)) return false;
+// SetupCountTriggerPopup: GD 2.2091 moved this popup to the standard trigger UI system, so the
+// generic SetupTriggerPopup::createValueControlAdvanced hook above already handles it.
+// (the old per-popup hook used members that no longer exist)
 
-        auto ctx = getMultiEditContext(this);
-
-        ctx->addInput(m_itemIDInput, 80);
-        ctx->addInput(m_targetCountInput, 77);
-        ctx->addInput(m_targetIDInput, 51);
-        m_itemIDInput->setMaxLabelWidth(40);
-        m_targetCountInput->setMaxLabelWidth(40);
-        m_targetIDInput->setMaxLabelWidth(40);
-
-        ctx->addInputBG(m_mainLayer->getChildByType<CCScale9Sprite*>(1), 80);
-        ctx->addInputBG(m_mainLayer->getChildByType<CCScale9Sprite*>(2), 77);
-        ctx->addInputBG(m_mainLayer->getChildByType<CCScale9Sprite*>(3), 51);
-
-        ctx->addInputLabel(m_mainLayer->getChildByType<CCLabelBMFont*>(1), 80);
-        ctx->addInputLabel(m_mainLayer->getChildByType<CCLabelBMFont*>(2), 77);
-        ctx->addInputLabel(m_mainLayer->getChildByType<CCLabelBMFont*>(3), 51);
-
-        ctx->addButton(m_buttonMenu->getChildByType<CCMenuItemSpriteExtra*>(2), 80);
-        ctx->addButton(m_buttonMenu->getChildByType<CCMenuItemSpriteExtra*>(3), 80);
-        ctx->addButton(m_buttonMenu->getChildByType<CCMenuItemSpriteExtra*>(4), 77);
-        ctx->addButton(m_buttonMenu->getChildByType<CCMenuItemSpriteExtra*>(5), 77);
-        ctx->addButton(m_buttonMenu->getChildByType<CCMenuItemSpriteExtra*>(6), 51);
-        ctx->addButton(m_buttonMenu->getChildByType<CCMenuItemSpriteExtra*>(7), 51);
-
-        ctx->setupMixed();
-
-        return true;
-    }
-};
 
 #include <Geode/modify/SetupInstantCountPopup.hpp>
 
@@ -1179,53 +981,10 @@ class $modify(SetupAnimationPopup) {
 
 #include <Geode/modify/GJPFollowCommandLayer.hpp>
 
-class $modify(GJPFollowCommandLayer) {
-    bool init(EffectGameObject* obj, CCArray* objs) {
-        if (!GJPFollowCommandLayer::init(obj, objs)) return false;
+// GJPFollowCommandLayer: GD 2.2091 moved this popup to the standard trigger UI system, so the
+// generic SetupTriggerPopup::createValueControlAdvanced hook above already handles it.
+// (the old per-popup hook used members that no longer exist)
 
-        auto ctx = getMultiEditContext(this);
-
-        ctx->addInput(m_moveTimeInput, 10);
-        ctx->addInput(m_speedInput, 90);
-        ctx->addInput(m_delayInput, 91);
-        ctx->addInput(m_offsetInput, 92);
-        ctx->addInput(m_maxSpeedInput, 105);
-        ctx->addInput(m_targetIDInput, 51);
-
-        ctx->addInputBG(m_mainLayer->getChildByType<CCScale9Sprite*>(1), 10);
-        ctx->addInputBG(m_mainLayer->getChildByType<CCScale9Sprite*>(2), 90);
-        ctx->addInputBG(m_mainLayer->getChildByType<CCScale9Sprite*>(3), 91);
-        ctx->addInputBG(m_mainLayer->getChildByType<CCScale9Sprite*>(4), 51);
-        ctx->addInputBG(m_mainLayer->getChildByType<CCScale9Sprite*>(5), 92);
-        ctx->addInputBG(m_mainLayer->getChildByType<CCScale9Sprite*>(6), 105);
-
-        m_moveTimeInput->setMaxLabelWidth(50);
-        m_speedInput->setMaxLabelWidth(50);
-        m_delayInput->setMaxLabelWidth(50);
-        m_offsetInput->setMaxLabelWidth(40);
-        m_maxSpeedInput->setMaxLabelWidth(40);
-        m_targetIDInput->setMaxLabelWidth(40);
-
-        ctx->addSlider(m_moveTimeSlider, 10);
-        ctx->addSlider(m_speedSlider, 90);
-        ctx->addSlider(m_delaySlider, 91);
-
-        m_moveTimeSlider->m_delegate = this;
-        m_speedSlider->m_delegate = this;
-        m_delaySlider->m_delegate = this;
-
-        ctx->addInputLabel(m_mainLayer->getChildByType<CCLabelBMFont*>(1), 10);
-        ctx->addInputLabel(m_mainLayer->getChildByType<CCLabelBMFont*>(2), 90);
-        ctx->addInputLabel(m_mainLayer->getChildByType<CCLabelBMFont*>(3), 91);
-        ctx->addInputLabel(m_mainLayer->getChildByType<CCLabelBMFont*>(7), 51);
-        ctx->addInputLabel(m_mainLayer->getChildByType<CCLabelBMFont*>(8), 92);
-        ctx->addInputLabel(m_mainLayer->getChildByType<CCLabelBMFont*>(9), 105);
-
-        ctx->setupMixed();
-
-        return true;
-    }
-};
 
 // special case for move triggers because move/mod x/y doesn't use rob's group and page system
 
