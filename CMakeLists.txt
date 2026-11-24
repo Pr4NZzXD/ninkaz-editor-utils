@@ -22,4 +22,9 @@ endif()
 
 add_subdirectory($ENV{GEODE_SDK} ${CMAKE_CURRENT_BINARY_DIR}/geode)
 
+# show every compiler error instead of stopping after the first 20 (clang)
+if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    target_compile_options(${PROJECT_NAME} PRIVATE -ferror-limit=0)
+endif()
+
 setup_geode_mod(${PROJECT_NAME})
