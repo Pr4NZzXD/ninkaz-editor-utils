@@ -635,7 +635,8 @@ class $modify(STPSetupSpawnPopup, SetupSpawnPopup) {
             1.f,
             true,
             "GJ_button_04.png",
-            true
+            true,
+            0.f // new float parameter added in GD 2.2091 (value is a guess)
         );
 
         auto delAllBtn = CCMenuItemSpriteExtra::create(
