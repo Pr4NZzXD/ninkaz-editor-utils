@@ -8,6 +8,13 @@ class $modify(ARGEditorPauseLayer, EditorPauseLayer) {
     bool init(LevelEditorLayer* lel) {
         if (!EditorPauseLayer::init(lel)) return false;
 
+        // other mods (e.g. Tinker) can rearrange or remove this menu, so never assume it exists
+        auto menu = getChildByID("small-actions-menu");
+        if (!menu) {
+            log::warn("small-actions-menu not found in EditorPauseLayer, skipping the Random Groups button");
+            return true;
+        }
+
         auto spr = ButtonSprite::create("Random\nGroups", 30, true, "bigFont.fnt", "GJ_button_04.png", 30.f, 0.3f);
         spr->setScale(0.8f);
 
@@ -16,9 +23,13 @@ class $modify(ARGEditorPauseLayer, EditorPauseLayer) {
         );
         btn->setID("random-groups-button"_spr);
 
-        auto menu = getChildByID("small-actions-menu");
-        auto afterNode = static_cast<CCNode*>(menu->getChildren()->objectAtIndex(0));
-        menu->insertBefore(btn, afterNode);
+        CCNode* afterNode = nullptr;
+        if (auto children = menu->getChildren(); children && children->count() > 0) {
+            afterNode = static_cast<CCNode*>(children->objectAtIndex(0));
+        }
+
+        if (afterNode) menu->insertBefore(btn, afterNode);
+        else menu->addChild(btn);
         menu->updateLayout();
 
         return true;
