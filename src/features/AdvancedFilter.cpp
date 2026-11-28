@@ -19,6 +19,11 @@ class $modify(AFEditorUI, EditorUI) {
         // modify ui
 
         auto filterMenu = querySelector("delete-category-menu > delete-filter-menu");
+        if (!filterMenu) {
+            // another mod changed the delete menu layout, so skip the advanced filter button instead of crashing
+            log::warn("delete-filter-menu not found in EditorUI, skipping the advanced filter button");
+            return true;
+        }
 
         filterMenu->removeChildByID("delete-filter-group-id");
         filterMenu->removeChildByID("delete-filter-color");
@@ -138,6 +143,7 @@ class $modify(AFEditorUI, EditorUI) {
     }
 
     void onUpdateFilter() {
+        if (!m_fields->filterBtn) return;
         m_fields->filterBtn->setSprite(s_filter.isActive() ? m_fields->activeSpr : m_fields->inactiveSpr);
     }
 };
